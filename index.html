@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>knowmad.ar · Kit de Campaña Multimodal IA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e17;
+    --bg2: #111826;
+    --bg3: #162033;
+    --card: #1a2535;
+    --border: #1f2e42;
+    --orange: #ff5c2b;
+    --teal: #00d4aa;
+    --teal-dim: #00a688;
+    --white: #f0f4ff;
+    --muted: #7a8aaa;
+    --font-head: 'Space Grotesk', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--font-head);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(10,14,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 60px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-brand {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--white);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-brand span { color: var(--orange); }
+  .nav-links {
+    display: flex; gap: 1.5rem; list-style: none;
+  }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,212,170,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,92,43,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 960px; margin: 0 auto; width: 100%; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border);
+    padding: 6px 14px; border-radius: 999px;
+    font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 2rem;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 6px var(--teal);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; } 50% { opacity: 0.4; }
+  }
+  .hero h1 {
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--orange);
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--muted);
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--orange);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,92,43,0.3);
+  }
+  .btn-ghost {
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .hero-stat-num {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--teal);
+  }
+  .hero-stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; }
+  .container { max-width: 1080px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  .section-desc {
+    color: var(--muted);
+    font-size: 1rem;
+    max-width: 560px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+  .divider {
+    width: 40px; height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--teal));
+    border-radius: 2px;
+    margin-bottom: 1rem;
+  }
+
+  /* ── CONCEPTO ── */
+  #concepto { background: var(--bg2); }
+  .concepto-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+    margin-top: 2rem;
+  }
+  .concepto-card {
+    background: var(--card);
+    padding: 2.5rem;
+    transition: background 0.2s;
+  }
+  .concepto-card:hover { background: var(--bg3); }
+  .concepto-card h3 {
+    color: var(--teal);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .concepto-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+  .concepto-card strong { color: var(--white); }
+
+  /* ── ACTIVOS ── */
+  #activos { background: var(--bg); }
+  .activos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5px;
+    border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  }
+  .activo-card {
+    background: var(--card);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: background 0.25s;
+  }
+  .activo-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--orange), var(--teal));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .activo-card:hover { background: var(--bg3); }
+  .activo-card:hover::before { transform: scaleX(1); }
+  .activo-num {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--orange);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.75rem;
+  }
+  .activo-icon {
+    font-size: 2rem; margin-bottom: 1rem;
+  }
+  .activo-card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+  }
+  .activo-card p {
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .activo-tool {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 4px 10px; border-radius: 4px;
+    font-size: 0.7rem; font-family: var(--font-mono);
+    color: var(--teal);
+  }
+
+  /* ── PROMPTS ── */
+  #prompts { background: var(--bg2); }
+  .prompts-list { display: flex; flex-direction: column; gap: 2rem; }
+  .prompt-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .prompt-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg3);
+  }
+  .prompt-header-left { display: flex; align-items: center; gap: 10px; }
+  .prompt-header h4 {
+    font-size: 0.9rem; font-weight: 600;
+  }
+  .prompt-tool-badge {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: var(--bg);
+    color: var(--orange);
+    border: 1px solid rgba(255,92,43,0.3);
+  }
+  .prompt-body {
+    padding: 1.5rem;
+  }
+  .prompt-purpose {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  pre {
+    background: #080c14;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: #a8d8b8;
+    overflow-x: auto;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  pre .comment { color: #4a6070; }
+  pre .key { color: var(--teal); }
+  pre .value { color: #f0c080; }
+
+  /* ── WORKFLOW ── */
+  #workflow { background: var(--bg); }
+  .workflow-timeline {
+    position: relative;
+    margin-top: 2rem;
+  }
+  .workflow-line {
+    position: absolute;
+    left: 28px; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--orange), var(--teal));
+  }
+  .workflow-steps { display: flex; flex-direction: column; gap: 0; }
+  .workflow-step {
+    display: flex; gap: 2rem;
+    padding: 2rem 0 2rem 0;
+    position: relative;
+  }
+  .workflow-dot {
+    flex-shrink: 0;
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--teal);
+    z-index: 1;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .workflow-step:hover .workflow-dot {
+    border-color: var(--teal);
+    box-shadow: 0 0 16px rgba(0,212,170,0.2);
+  }
+  .workflow-content { flex: 1; padding-top: 0.6rem; }
+  .workflow-content h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--white);
+  }
+  .workflow-content p {
+    color: var(--muted);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+  }
+  .workflow-tools {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .workflow-tag {
+    font-size: 0.68rem;
+    font-family: var(--font-mono);
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .workflow-tag.orange { border-color: rgba(255,92,43,0.4); color: var(--orange); }
+  .workflow-tag.teal { border-color: rgba(0,212,170,0.4); color: var(--teal); }
+
+  /* ── AUDITORÍA ── */
+  #auditoria { background: var(--bg2); }
+  .audit-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 0.875rem;
+  }
+  .audit-table thead th {
+    background: var(--bg3);
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+  }
+  .audit-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+  .audit-table tbody tr:last-child { border-bottom: none; }
+  .audit-table tbody tr:hover { background: var(--bg3); }
+  .audit-table td {
+    padding: 1rem 1.25rem;
+    color: var(--muted);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .audit-table td:first-child { color: var(--white); font-weight: 500; }
+  .audit-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.65rem; font-family: var(--font-mono);
+    padding: 3px 8px; border-radius: 3px;
+  }
+  .audit-badge.ok {
+    background: rgba(0,212,170,0.1);
+    color: var(--teal);
+    border: 1px solid rgba(0,212,170,0.3);
+  }
+  .audit-badge::before { content: '✓'; }
+
+  /* ── LANZAMIENTO ── */
+  #lanzamiento { background: var(--bg); }
+  .launch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .launch-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .launch-card:hover {
+    border-color: var(--teal);
+    transform: translateY(-3px);
+  }
+  .launch-icon { font-size: 1.6rem; margin-bottom: 1rem; }
+  .launch-card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--white);
+  }
+  .launch-card p {
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  .launch-locales {
+    display: flex; flex-wrap: wrap; gap: 5px; margin-top: 0.75rem;
+  }
+  .locale-pill {
+    font-size: 0.65rem; font-family: var(--font-mono);
+    padding: 2px 8px; border-radius: 3px;
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  /* ── STACK ── */
+  #stack { background: var(--bg2); }
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+    margin-top: 2rem;
+  }
+  .stack-item {
+    background: var(--card);
+    padding: 1.5rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+    transition: background 0.2s;
+  }
+  .stack-item:hover { background: var(--bg3); }
+  .stack-role {
+    font-size: 0.65rem;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--orange);
+    font-family: var(--font-mono);
+  }
+  .stack-tool {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .stack-desc {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .stack-tier {
+    font-size: 0.62rem;
+    font-family: var(--font-mono);
+    color: var(--teal);
+    margin-top: auto;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg3);
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .footer-brand {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .footer-brand span { color: var(--orange); }
+  .footer-sub {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  .footer-ai-notice {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.72rem;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 6px 16px; border-radius: 999px;
+  }
+  .footer-ai-notice::before {
+    content: '🤖';
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .concepto-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .workflow-line { display: none; }
+    .hero h1 { font-size: 3rem; }
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .reveal.visible {
+    opacity: 1; transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; }
+    .hero::before, .hero::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">knowmad<span>.ar</span></a>
+  <ul class="nav-links">
+    <li><a href="#concepto">Concepto</a></li>
+    <li><a href="#activos">Activos</a></li>
+    <li><a href="#prompts">Prompts</a></li>
+    <li><a href="#workflow">Workflow</a></li>
+    <li><a href="#auditoria">Auditoría</a></li>
+    <li><a href="#stack">Stack</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Marcelo Pais · Entregable Final · Campaña Multimodal IA</div>
+    <h1>El Soporte<br><em>Inteligente</em></h1>
+    <p class="hero-sub">Campaña multimodal B2B para knowmad.ar: POP interactivo con Realidad Aumentada, avatares IA y embalaje sustentable. Producción 100% automatizada con IA generativa.</p>
+    <div class="hero-cta">
+      <a href="carrusel-verde-vida.pdf" target="_blank" class="btn-primary">Ver Kit de Campaña</a>
+      <a href="#workflow" class="btn-ghost">Ver Workflow</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">6</div>
+        <div class="hero-stat-label">Activos Multimodal</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">4</div>
+        <div class="hero-stat-label">Herramientas IA</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">75%</div>
+        <div class="hero-stat-label">Menos tiempo de prototipado</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">3</div>
+        <div class="hero-stat-label">Idiomas de lanzamiento</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTO -->
+<section id="concepto">
+  <div class="container">
+    <div class="section-label">01 · Concepto de Campaña</div>
+    <div class="divider"></div>
+    <h2 class="section-title">Retail Marketing Inteligente</h2>
+    <p class="section-desc">El punto de venta físico ya no es un espacio pasivo. knowmad.ar convierte exhibidores POP en experiencias interactivas potenciadas por IA.</p>
+    <div class="concepto-grid reveal">
+      <div class="concepto-card">
+        <h3>Concepto Central</h3>
+        <p>Para <strong>knowmad.ar</strong>, proponemos la campaña <strong>"El Soporte Inteligente"</strong>: exhibidores POP que conectan dinámicamente con experiencias móviles mediante Realidad Aumentada y asistentes de voz inteligentes.<br><br>El punto de venta físico se convierte en un nodo de conversión digital, donde cada touchpoint genera datos accionables para las marcas aliadas.</p>
+      </div>
+      <div class="concepto-card">
+        <h3>Propuesta de Valor</h3>
+        <p>Demostramos cómo la IA generativa acelera el proceso B2B completo: <strong>diseño técnico</strong> de exhibidores POP en minutos, <strong>prototipado 3D</strong> fotorrealista de packaging, <strong>producción de copies</strong> de venta contextuales para cada vertical (telefonía, cosmética, consumo masivo) y automatización end-to-end sin perder coherencia de marca.</p>
+      </div>
+      <div class="concepto-card">
+        <h3>Audiencia Objetivo</h3>
+        <p>Gerentes de Marketing y Trade Marketing de <strong>marcas líderes</strong> en retail argentino. Buscan soluciones de exhibición diferenciadas que conviertan el canal físico en una extensión del ecosistema digital de la marca, con métricas de performance claras y time-to-market reducido.</p>
+      </div>
+      <div class="concepto-card">
+        <h3>Paleta & Identidad Visual</h3>
+        <p>Sistema visual basado en <strong>cartón kraft natural</strong> como material ancla (neutrales cálidos), contrastado con <strong>tintas ecológicas verdes</strong> y tipografía técnica. La regla de consistencia es absoluta: todas las piezas comparten el mismo token system de colores, el mismo estilo fotográfico flat-lay studio y el mismo tratamiento de marca.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVOS -->
+<section id="activos">
+  <div class="container">
+    <div class="section-label">02 · Kit de Campaña</div>
+    <div class="divider"></div>
+    <h2 class="section-title">Los Activos de la Campaña</h2>
+    <p class="section-desc">Cada pieza comparte estética, paleta y mensaje. Sin efecto Frankenstein: un sistema, múltiples formatos.</p>
+
+    <!-- FILA 1: DOS VIDEOS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;margin-bottom:1.5px;" class="reveal">
+      <div class="activo-card">
+        <div class="activo-num">ACTIVO 01 · VIDEO</div>
+        <video src="hero-film.mp4" autoplay muted loop playsinline style="width:100%;border-radius:6px;margin-bottom:1rem;"></video>
+        <h3>Hero Film — Unboxing</h3>
+        <p>Unboxing cinematográfico del packaging Verde Vida en PDV real. Cámara lenta, iluminación natural cálida. El 90% de la decisión de compra ocurre frente al exhibidor — este video lo demuestra. Generado con IA sin cámara ni estudio.</p>
+        <div class="activo-tool">Runway · Product Shot Video Builder · ⚠️ Contenido generado con IA</div>
+      </div>
+      <div class="activo-card">
+        <div class="activo-num">ACTIVO 02 · VIDEO</div>
+        <video src="retail-store-film.mp4" autoplay muted loop playsinline style="width:100%;border-radius:6px;margin-bottom:1rem;"></video>
+        <h3>Retail Store Film</h3>
+        <p>Tracking shot cinematográfico en PDV futurista inteligente. Exhibición interactiva con displays holográficos, iluminación en los colores de knowmad.ar. Pieza de contexto para presentaciones B2B ante marcas líderes.</p>
+        <div class="activo-tool">Gemini · ⚠️ Contenido generado con IA</div>
+      </div>
+    </div>
+
+    <!-- FILA 2: AVATAR + AUDIO -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;margin-bottom:1.5px;" class="reveal">
+      <div class="activo-card">
+        <div class="activo-num">ACTIVO 03 · AVATAR</div>
+        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:6px;margin-bottom:1rem;">
+          <iframe src="https://app.heygen.com/embeds/953fe256458b4099b91e778ccd007a76" title="Presentador Virtual knowmad.ar" frameborder="0" allow="encrypted-media; fullscreen;" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+        </div>
+        <h3>Presentador Virtual B2B</h3>
+        <p>Avatar IA que presenta la propuesta de valor de knowmad.ar en tono consultivo. Voz sincronizada, entorno de oficina moderna. Para usar en decks de venta, emails y landing pages B2B. Generado íntegramente con IA — sin cámara, sin actor.</p>
+        <div class="activo-tool">HeyGen · ⚠️ Contenido generado con IA</div>
+      </div>
+      <div class="activo-card">
+        <div class="activo-num">ACTIVO 04 · AUDIO</div>
+        <audio controls style="width:100%;margin-bottom:1rem;">
+          <source src="identidad-sonora.mp3" type="audio/mpeg">
+        </audio>
+        <h3>Identidad Sonora</h3>
+        <p>Música generada con IA. Intro ambient con guitarra acústica, voz en inglés con letra corporativa inspiracional. Pensada para acompañar el Hero Film y piezas de presentación. Generada íntegramente con IA — sin músicos, sin estudio.</p>
+        <div class="activo-tool">Suno AI · ⚠️ Contenido generado con IA</div>
+      </div>
+    </div>
+
+    <!-- FILA 3: CARRUSEL + EMAILS -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;" class="reveal">
+      <div class="activo-card">
+        <div class="activo-num">ACTIVO 05 · VISUAL</div>
+        <a href="carrusel-verde-vida.pdf" target="_blank" style="display:block;margin-bottom:1rem;position:relative;">
+          <img src="slide1_hero.jpg" style="width:100%;border-radius:6px;object-fit:cover;" alt="Ver carrusel completo">
+          <div style="position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.7);color:var(--teal);font-size:0.7rem;font-family:var(--font-mono);padding:4px 10px;border-radius:4px;border:1px solid var(--teal);">Ver carrusel completo →</div>
+        </a>
+        <h3>Carrusel de Instagram</h3>
+        <p>5 imágenes de packaging eco-friendly para e-commerce con consistencia visual total. Misma iluminación, mismo fondo, mismo sistema estético en todas las piezas. Hacé clic en la imagen para ver el carrusel completo.</p>
+        <div class="activo-tool">ChatGPT · DALL-E · ⚠️ Contenido generado con IA</div>
+      </div>
+
+      <div class="activo-card">
+        <div class="activo-num">ACTIVO 06 · COPY</div>
+        <div class="activo-icon">✍️</div>
+        <h3>Secuencia de Emails B2B</h3>
+
+        <div style="margin-bottom:1.25rem;">
+          <div style="font-size:0.7rem;font-family:var(--font-mono);color:var(--orange);margin-bottom:0.5rem;">EMAIL 1 · COSMÉTICA / BEAUTY</div>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:1rem;font-size:0.82rem;color:var(--muted);line-height:1.7;">
+            <strong style="color:var(--white);display:block;margin-bottom:0.5rem;">Asunto: El POP que te gusta ya existe</strong>
+            Sabemos que el tiempo entre la idea y el PDV muchas veces se extiende más de lo que cualquier equipo quisiera.<br><br>
+            En knowmad.ar trabajamos para que, antes de producir un solo exhibidor, tu equipo ya lo vea instalado en el punto de venta. Con renders fotorrealistas generados por IA mostramos cómo va a quedar el POP con la paleta de tu marca, en el formato que necesite cada canal — todo en menos de 48 horas.<br><br>
+            El 90% de la decisión de compra ocurre frente al lineal: esa oportunidad no puede esperar semanas. Las marcas de cosmética con las que trabajamos redujeron el tiempo de aprobación comercial un 75%. Menos idas y vueltas, más tiempo para lo que importa.<br><br>
+            ¿Tiene sentido que lo veamos en 30 minutos?<br><br>
+            <em>knowmad.ar · Retail Marketing Inteligente</em>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:0.7rem;font-family:var(--font-mono);color:var(--orange);margin-bottom:0.5rem;">EMAIL 2 · CONSUMO MASIVO / ALIMENTOS</div>
+          <div style="background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:1rem;font-size:0.82rem;color:var(--muted);line-height:1.7;">
+            <strong style="color:var(--white);display:block;margin-bottom:0.5rem;">Asunto: Del brief al render en 48 horas</strong>
+            En consumo masivo la velocidad es todo. Llegar a destiempo con una activación al PDV es, en la práctica, no haber estado.<br><br>
+            En knowmad.ar prototipamos exhibidores POP y packaging con IA generativa: renders fotorrealistas listos para presentar internamente o al trade en menos de dos días. Sin esperar al proveedor de displays. Sin rondas interminables de correcciones.<br><br>
+            Si tu equipo está planificando el próximo lanzamiento o activación estacional, podemos tener el concepto visual del POP listo antes de que termine esta semana.<br><br>
+            ¿Agendamos 30 minutos para mostrártelo en vivo?<br><br>
+            <em>knowmad.ar · Retail Marketing Inteligente</em>
+          </div>
+        </div>
+
+        <div style="margin-top:1rem;">
+          <div class="activo-tool">Claude · ⚠️ Contenido generado con IA</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROMPTS MAESTROS -->
+<section id="prompts">
+  <div class="container">
+    <div class="section-label">03 · Documentación Técnica</div>
+    <div class="divider"></div>
+    <h2 class="section-title">Prompts Maestros</h2>
+    <p class="section-desc">Los prompts que generaron cada activo. Reproducibles, documentados y auditables.</p>
+    <div class="prompts-list reveal">
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <div class="prompt-header-left">
+            <span>🎬</span>
+            <h4>Hero Film — Video Principal</h4>
+          </div>
+          <span class="prompt-tool-badge">Runway Gen-3 Alpha</span>
+        </div>
+        <div class="prompt-body">
+          <p class="prompt-purpose">Genera el video hero de 45 segundos para el canal retail. Se usa como pieza ancla de toda la campaña.</p>
+          <pre><span class="comment">// PROMPT MAESTRO — RUNWAY GEN-3 ALPHA</span>
+<span class="key">Escena:</span> <span class="value">Slow cinematic dolly shot, macro perspective</span>
+<span class="key">Sujeto:</span> <span class="value">Premium sustainable wooden retail display stand,
+          eco-branding with kraft paper textures, minimalist layout</span>
+<span class="key">Atmósfera:</span> <span class="value">Soft bokeh background, warm architectural lighting (3200K),
+           morning boutique store, natural sunlight through windows</span>
+<span class="key">Movimiento:</span> <span class="value">Camera starts wide → slow push to macro detail of
+            brand label on packaging, then pulls back revealing full stand</span>
+<span class="key">Técnica:</span> <span class="value">Hyperrealistic, high detail, 4K cinematic, no text overlays,
+          no people, no VFX artifacts</span>
+<span class="key">Duración:</span> <span class="value">10 seconds loopable (x4 para editar el Hero de 45s)</span></pre>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <div class="prompt-header-left">
+            <span>🖼️</span>
+            <h4>Carrusel — Packaging Eco</h4>
+          </div>
+          <span class="prompt-tool-badge">Midjourney v6</span>
+        </div>
+        <div class="prompt-body">
+          <p class="prompt-purpose">Genera las 5 imágenes del carrusel de Instagram con consistencia visual total. Usar --sref con la primera imagen generada para mantener coherencia entre slides.</p>
+          <pre><span class="comment">// PROMPT BASE (repetir para cada slide cambiando [VARIACIÓN])</span>
+/imagine <span class="value">minimalist premium packaging design for B2B retail,
+sustainable kraft cardboard with eco green ink branding,
+flat lay composition on white marble surface, studio lighting,
+soft shadows, photorealistic 8K, [VARIACIÓN]
+--ar 4:5 --style raw --v 6 --sref [URL_PRIMERA_IMAGEN]</span>
+
+<span class="comment">// VARIACIONES POR SLIDE:</span>
+<span class="key">Slide 1:</span> <span class="value">single box centered, hero shot</span>
+<span class="key">Slide 2:</span> <span class="value">unboxing sequence, tissue paper reveal</span>
+<span class="key">Slide 3:</span> <span class="value">stacked boxes composition, isometric view</span>
+<span class="key">Slide 4:</span> <span class="value">detail of eco certifications, macro lens</span>
+<span class="key">Slide 5:</span> <span class="value">lifestyle context, hand holding product</span></pre>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <div class="prompt-header-left">
+            <span>✍️</span>
+            <h4>Email de Prospección B2B</h4>
+          </div>
+          <span class="prompt-tool-badge">Claude / ChatGPT</span>
+        </div>
+        <div class="prompt-body">
+          <p class="prompt-purpose">Genera los 3 emails de la secuencia de prospección. Adaptar [VERTICAL] según el cliente objetivo.</p>
+          <pre><span class="comment">// PROMPT SISTEMA (usar como system prompt)</span>
+<span class="value">Sos copywriter B2B senior especializado en retail marketing
+para Latinoamérica. Escribís en español rioplatense, tono
+consultivo y directo. Nunca usás jerga técnica de IA.
+Estructura siempre: gancho → dolor → solución → prueba → CTA.
+Máximo 200 palabras por email.</span>
+
+<span class="comment">// PROMPT DE USUARIO</span>
+<span class="value">Escribí el Email [1/2/3] de una secuencia de prospección para
+knowmad.ar dirigida al Gerente de Trade Marketing de una marca
+de [VERTICAL: telefonía / cosmética / consumo masivo].
+
+El email debe mencionar que:
+- Reducimos el tiempo de prototipado de stands en 75%
+- Los renders son fotorrealistas con IA (sin mencionar qué IA)
+- Ofrecemos una demo de 30 min sin compromiso
+
+Asunto: creativo, menos de 7 palabras, sin signos de exclamación.</span></pre>
+        </div>
+      </div>
+
+      <div class="prompt-block">
+        <div class="prompt-header">
+          <div class="prompt-header-left">
+            <span>🎵</span>
+            <h4>Identidad Sonora</h4>
+          </div>
+          <span class="prompt-tool-badge">Suno AI</span>
+        </div>
+        <div class="prompt-body">
+          <p class="prompt-purpose">Genera la música ambiente corporativa sin artefactos metálicos para el Hero Film y el Avatar.</p>
+          <pre><span class="comment">// PROMPT SUNO — MÚSICA CORPORATIVA</span>
+<span class="value">Minimal corporate ambient music, soft acoustic guitar arpeggios,
+subtle warm synthesizer pads, light percussion brushes,
+professional business feel, optimistic but not aggressive,
+no vocals, no lyrics, no AI artifacts, loop-friendly,
+clean ending, suitable for B2B presentation video
+BPM: 90-95, Key: C major, Duration: 60 seconds</span>
+
+<span class="comment">// TAGS DE ESTILO: [ambient] [corporate] [minimal] [instrumental]</span>
+
+<span class="comment">// PROMPT ELEVENLABS — LOCUCIÓN</span>
+<span class="value">Voice: Antoni (ES) o Charlotte (EN)
+Stability: 0.65 | Similarity: 0.80 | Style: 0.20
+Script: [insertar guion del avatar]
+Nota: leer en tono consultivo, pausas naturales,
+sin énfasis excesivo, ritmo de presentación B2B</span></pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section id="workflow">
+  <div class="container">
+    <div class="section-label">04 · Workflow de Producción</div>
+    <div class="divider"></div>
+    <h2 class="section-title">Proceso de Creación</h2>
+    <p class="section-desc">Del brief al activo publicado: 4 etapas, flujo lineal, trazabilidad completa de cada decisión creativa.</p>
+    <div class="reveal" style="margin-top:2rem;">
+      <svg width="100%" viewBox="0 0 680 620" role="img" style="display:block;">
+        <title>Workflow de producción knowmad.ar</title>
+        <desc>4 pasos: Ideación, Generación visual, Producción audio-video, Edición y publicación</desc>
+        <defs>
+          <marker id="wf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#00d4aa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </marker>
+        </defs>
+        <!-- PASO 1 -->
+        <rect x="40" y="40" width="600" height="86" rx="8" fill="#1a2535" stroke="#534AB7" stroke-width="1.5"/>
+        <text x="70" y="76" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="600" fill="#AFA9EC" dominant-baseline="central">01 · Ideación y brief</text>
+        <text x="70" y="100" font-family="Space Grotesk,sans-serif" font-size="12" fill="#7a8aaa" dominant-baseline="central">Claude redacta guiones, copies B2B y define el sistema visual completo de la campaña</text>
+        <text x="630" y="100" font-family="Space Mono,monospace" font-size="10" fill="#534AB7" text-anchor="end" dominant-baseline="central">Claude · ChatGPT</text>
+        <!-- flecha -->
+        <line x1="340" y1="126" x2="340" y2="154" stroke="#00d4aa" stroke-width="1.5" marker-end="url(#wf-arrow)"/>
+        <!-- PASO 2 -->
+        <rect x="40" y="156" width="600" height="86" rx="8" fill="#1a2535" stroke="#0F6E56" stroke-width="1.5"/>
+        <text x="70" y="192" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="600" fill="#5DCAA5" dominant-baseline="central">02 · Generación visual</text>
+        <text x="70" y="216" font-family="Space Grotesk,sans-serif" font-size="12" fill="#7a8aaa" dominant-baseline="central">ChatGPT genera packaging con consistencia visual. Primera imagen aprobada = ancla del sistema</text>
+        <text x="630" y="216" font-family="Space Mono,monospace" font-size="10" fill="#0F6E56" text-anchor="end" dominant-baseline="central">ChatGPT · DALL-E</text>
+        <!-- flecha -->
+        <line x1="340" y1="242" x2="340" y2="270" stroke="#00d4aa" stroke-width="1.5" marker-end="url(#wf-arrow)"/>
+        <!-- PASO 3 -->
+        <rect x="40" y="272" width="600" height="86" rx="8" fill="#1a2535" stroke="#993C1D" stroke-width="1.5"/>
+        <text x="70" y="308" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="600" fill="#F0997B" dominant-baseline="central">03 · Producción audio-video</text>
+        <text x="70" y="332" font-family="Space Grotesk,sans-serif" font-size="12" fill="#7a8aaa" dominant-baseline="central">Runway anima el video hero. ElevenLabs: locución. HeyGen: avatar. Suno: música sin artefactos</text>
+        <text x="630" y="332" font-family="Space Mono,monospace" font-size="10" fill="#993C1D" text-anchor="end" dominant-baseline="central">Runway · ElevenLabs · HeyGen</text>
+        <!-- flecha -->
+        <line x1="340" y1="358" x2="340" y2="386" stroke="#00d4aa" stroke-width="1.5" marker-end="url(#wf-arrow)"/>
+        <!-- PASO 4 -->
+        <rect x="40" y="388" width="600" height="86" rx="8" fill="#1a2535" stroke="#3B6D11" stroke-width="1.5"/>
+        <text x="70" y="424" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="600" fill="#97C459" dominant-baseline="central">04 · Edición y publicación</text>
+        <text x="70" y="448" font-family="Space Grotesk,sans-serif" font-size="12" fill="#7a8aaa" dominant-baseline="central">CapCut unifica audio y video. Make.com organiza assets. GitHub Pages publica el kit final</text>
+        <text x="630" y="448" font-family="Space Mono,monospace" font-size="10" fill="#3B6D11" text-anchor="end" dominant-baseline="central">CapCut · Make.com · GitHub</text>
+        <!-- flecha -->
+        <line x1="340" y1="474" x2="340" y2="502" stroke="#00d4aa" stroke-width="1.5" marker-end="url(#wf-arrow)"/>
+        <!-- RESULTADO -->
+        <rect x="190" y="504" width="300" height="56" rx="8" fill="#162033" stroke="#00d4aa" stroke-width="1.5"/>
+        <text x="340" y="528" text-anchor="middle" font-family="Space Grotesk,sans-serif" font-size="14" font-weight="600" fill="#00d4aa" dominant-baseline="central">Kit de campaña publicado</text>
+        <text x="340" y="548" text-anchor="middle" font-family="Space Mono,monospace" font-size="11" fill="#7a8aaa" dominant-baseline="central">URL pública · GitHub Pages</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- AUDITORÍA -->
+<section id="auditoria">
+  <div class="container">
+    <div class="section-label">05 · Uso Responsable de IA</div>
+    <div class="divider"></div>
+    <h2 class="section-title">Informe de Auditoría Legal</h2>
+    <p class="section-desc">Cada activo generado declara su origen, herramienta y las salvaguardas aplicadas. Transparencia total.</p>
+    <div class="reveal" style="overflow-x:auto;">
+      <table class="audit-table">
+        <thead>
+          <tr>
+            <th>Activo Generado</th>
+            <th>Herramienta IA</th>
+            <th>Origen del Contenido</th>
+            <th>Buenas Prácticas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Exhibidores 3D / Packaging</td>
+            <td>Midjourney v6</td>
+            <td>Modelos sintéticos entrenados sobre corpus abierto. Sin referencias de imágenes protegidas por derechos.</td>
+            <td><span class="audit-badge ok">Licencia comercial activa (Pro)</span><br><br>Marca de agua digital en metadatos EXIF.</td>
+          </tr>
+          <tr>
+            <td>Hero Film (Video)</td>
+            <td>Runway Gen-3 Alpha</td>
+            <td>Generación dinámica sobre imágenes propias generadas en Midjourney. Sin footage de terceros.</td>
+            <td><span class="audit-badge ok">Metadatos firmados digitalmente</span><br><br>Declaración explícita de uso de IA en créditos finales.</td>
+          </tr>
+          <tr>
+            <td>Avatar Técnico B2B</td>
+            <td>HeyGen Studio</td>
+            <td>Actor virtual licenciado comercialmente por HeyGen. Sin réplica de personas reales.</td>
+            <td><span class="audit-badge ok">Licencia comercial HeyGen</span><br><br>Leyenda visible: <em>"Contenido generado con asistencia de IA"</em>.</td>
+          </tr>
+          <tr>
+            <td>Locución / Identidad Sonora</td>
+            <td>ElevenLabs + Suno</td>
+            <td>Sintetizador de voz propio (ElevenLabs Reader). Música 100% generativa. Sin muestras de artistas reales.</td>
+            <td><span class="audit-badge ok">Filtros de reducción de artefactos activos</span><br><br>Sin imitación de voces identificables.</td>
+          </tr>
+          <tr>
+            <td>Copy / Emails B2B</td>
+            <td>Claude 3.5 + ChatGPT 4o</td>
+            <td>Generación original con brief propio. Sin reproducción de materiales de terceros.</td>
+            <td><span class="audit-badge ok">Revisión humana pre-envío</span><br><br>Sin referencias a marcas competidoras.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- LANZAMIENTO -->
+<section id="lanzamiento">
+  <div class="container">
+    <div class="section-label">06 · Estrategia de Lanzamiento</div>
+    <div class="divider"></div>
+    <h2 class="section-title">Distribución Multicanal</h2>
+    <p class="section-desc">Plan de adaptación por formato e idioma. La campaña es global desde el día uno.</p>
+    <div class="launch-grid reveal">
+
+      <div class="launch-card">
+        <div class="launch-icon">📱</div>
+        <h3>Redes Sociales</h3>
+        <p>Instagram Feed (4:5), Reels (9:16), LinkedIn carrusel (1:1). Copies adaptados por plataforma: más visual en Instagram, más datos en LinkedIn.</p>
+        <div class="launch-locales">
+          <span class="locale-pill">ES</span>
+          <span class="locale-pill">EN</span>
+        </div>
+      </div>
+
+      <div class="launch-card">
+        <div class="launch-icon">📧</div>
+        <h3>Email B2B</h3>
+        <p>Secuencia de 3 emails por vertical. A/B testing de asuntos. Integración con HubSpot para tracking de apertura y clics por segmento.</p>
+        <div class="launch-locales">
+          <span class="locale-pill">ES</span>
+          <span class="locale-pill">PT</span>
+        </div>
+      </div>
+
+      <div class="launch-card">
+        <div class="launch-icon">🎯</div>
+        <h3>Trade Shows</h3>
+        <p>El Hero Film en loop en la pantalla del stand propio en ferias sectoriales (ExpoRetail, Anufood). QR que lleva al avatar demo en vivo.</p>
+        <div class="launch-locales">
+          <span class="locale-pill">ES</span>
+        </div>
+      </div>
+
+      <div class="launch-card">
+        <div class="launch-icon">🌐</div>
+        <h3>Landing Page</h3>
+        <p>Microsite con el video hero, el avatar presentador embebido y formulario de solicitud de demo. Alojado en GitHub Pages o Vercel.</p>
+        <div class="launch-locales">
+          <span class="locale-pill">ES</span>
+          <span class="locale-pill">EN</span>
+          <span class="locale-pill">PT</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:2rem; padding:1.5rem; background:var(--card); border:1px solid var(--border); border-radius:10px;">
+      <h3 style="font-size:0.9rem; color:var(--teal); margin-bottom:0.75rem; text-transform:uppercase; letter-spacing:0.05em;">Protocolo de Localización</h3>
+      <p style="color:var(--muted); font-size:0.875rem; line-height:1.7;">Para cada idioma adicional: (1) ElevenLabs genera locución en el idioma destino desde el mismo script maestro, preservando tono y ritmo. (2) El avatar de HeyGen sincroniza labios automáticamente vía API. (3) Los textos del carrusel se reemplazan con layers de Canva conectados al CMS. Tiempo estimado por idioma adicional: <strong style="color:var(--white);">45 minutos.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section id="stack">
+  <div class="container">
+    <div class="section-label">07 · Stack Tecnológico</div>
+    <div class="divider"></div>
+    <h2 class="section-title">Herramientas del Pipeline</h2>
+    <p class="section-desc">Cada herramienta tiene un rol específico. Sin redundancias, sin herramientas elegidas por moda.</p>
+    <div class="stack-grid reveal">
+      <div class="stack-item">
+        <div class="stack-role">Ideación & Copy</div>
+        <div class="stack-tool">Claude 3.5 Sonnet</div>
+        <div class="stack-desc">Brief maestro, guiones, emails B2B, documentación técnica</div>
+        <div class="stack-tier">Anthropic · API</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-role">Imagen Estática</div>
+        <div class="stack-tool">Midjourney v6</div>
+        <div class="stack-desc">Packaging, renders de exhibidores, assets para carrusel</div>
+        <div class="stack-tier">Suscripción Pro · $60/mes</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-role">Animación / Video</div>
+        <div class="stack-tool">Runway Gen-3</div>
+        <div class="stack-desc">Hero Film, animación de renders estáticos a video</div>
+        <div class="stack-tier">Runway · Standard Plan</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-role">Voz & Doblaje</div>
+        <div class="stack-tool">ElevenLabs</div>
+        <div class="stack-desc">Locución corporativa, doblaje multi-idioma, sin estudio</div>
+        <div class="stack-tier">ElevenLabs · Creator Plan</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-role">Avatar Presentador</div>
+        <div class="stack-tool">HeyGen Studio</div>
+        <div class="stack-desc">Avatar licenciado, sincronización labial automática</div>
+        <div class="stack-tier">HeyGen · Business Plan</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-role">Música Generativa</div>
+        <div class="stack-tool">Suno AI</div>
+        <div class="stack-desc">Identidad sonora corporativa, sin artefactos metálicos</div>
+        <div class="stack-tier">Suno · Pro Plan</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-role">Edición Final</div>
+        <div class="stack-tool">CapCut Pro</div>
+        <div class="stack-desc">Unificación audio-video, color grading, exportación multi-formato</div>
+        <div class="stack-tier">TikTok for Business</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-role">Automatización</div>
+        <div class="stack-tool">Make.com</div>
+        <div class="stack-desc">Pipeline de publicación automática, Notion integration</div>
+        <div class="stack-tier">Make · Core Plan</div>
+      </div>
+      <div class="stack-item">
+        <div class="stack-role">Publicación & Entrega</div>
+        <div class="stack-tool">GitHub Pages</div>
+        <div class="stack-desc">Hosting del Kit de Campaña, URL pública, CI/CD automático</div>
+        <div class="stack-tier">Free tier</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand"><a href="https://www.knowmad.ar" target="_blank" style="color:inherit;text-decoration:none;">knowmad<span>.ar</span></a></div>
+  <p class="footer-sub">Campaña Multimodal Automatizada · Coderhouse IA · Entregable Final 2026 · Comisión #102530</p>
+  <div class="footer-ai-notice">Campaña producida con asistencia de Inteligencia Artificial Generativa. Todo el contenido sintético está debidamente declarado.</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => io.observe(el));
+
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--teal)' : '';
+    });
+  });
+</script>
+</body>
+</html>
